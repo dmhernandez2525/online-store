@@ -2,14 +2,22 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const CategorySchema = new Schema({
-    Products: [{
+    products: [{
         type: Schema.Types.ObjectId,
-        ref: "products"
+        ref: "product"
     }],
     name: {
         type: String,
         required: true
     }
 });
+
+CategorySchema.statics.allProducts = (id) => {
+    const Category = mongoose.model("category");
+    return Category.findById(id).populate("products").then(category => {
+        console.log(category)
+        return category.products
+    })
+}
 
 module.exports = mongoose.model("category", CategorySchema);
