@@ -2,22 +2,22 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const CategorySchema = new Schema({
-    products: [{
-        type: Schema.Types.ObjectId,
-        ref: "product"
-    }],
-    name: {
-        type: String,
-        required: true
+  name: {
+    type: String,
+    required: true
+  },
+  products: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "products"
     }
+  ]
 });
 
-CategorySchema.statics.allProducts = (id) => {
-    const Category = mongoose.model("category");
-    return Category.findById(id).populate("products").then(category => {
-        console.log(category)
-        return category.products
-    })
-}
+CategorySchema.statics.findProducts = function(categoryId) {
+  return this.findById(categoryId)
+    .populate("products")
+    .then(category => category.products);
+};
 
-module.exports = mongoose.model("category", CategorySchema);
+module.exports = mongoose.model("categories", CategorySchema);
