@@ -4,20 +4,23 @@
   "description": "online-store",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "daniel",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "concurrently": "^4.1.2",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
     "graphql": "^14.5.8",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.3",
     "nodemon": "^1.19.3",
-    "validator": "^11.1.0",
-    "webpack": "^4.41.0"
+    "validator": "^11.1.0"
   }
 }

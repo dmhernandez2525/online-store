@@ -22,7 +22,10 @@ if (!db) {
 
 mongoose
   // The configuration object we pass into connect() prevents an error being thrown by the latest release of MongoDB's driver
-  .connect(db, { useNewUrlParser: true })
+  .connect(db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
   .then(() => console.log("Connected to MongoDB successfully"))
   .catch(err => console.log(err));
 
