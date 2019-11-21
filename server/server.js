@@ -5,8 +5,23 @@ const bodyParser = require("body-parser");
 const db = require("../config/keys.js").MONGO_URI;
 const schema = require("./schema/schema");
 const expressGraphQL = require("express-graphql");
-
+const cors = require("cors");
 const app = express();
+
+
+app.use(cors());
+
+app.use(
+  "/graphql",
+  expressGraphQL({
+    schema,
+    graphiql: true
+  })
+);
+
+
+
+
 
 app.use(
   "/graphql",
@@ -22,7 +37,10 @@ if (!db) {
 
 mongoose
   // The configuration object we pass into connect() prevents an error being thrown by the latest release of MongoDB's driver
-  .connect(db, { useNewUrlParser: true })
+  .connect(db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
   .then(() => console.log("Connected to MongoDB successfully"))
   .catch(err => console.log(err));
 
